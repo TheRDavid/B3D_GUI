@@ -35,6 +35,7 @@ public class SplashDialog extends JFrame
         }
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         setBackground(new Color(0, 255, 0, 0));
+        setIconImage(icon.getImage());
         setContentPane(new ContentPane());
         getContentPane().setBackground(Color.BLACK);
         setLayout(new BorderLayout());
