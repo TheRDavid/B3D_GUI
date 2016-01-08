@@ -1,6 +1,5 @@
 package dialogs;
 
-import components.StatusBar;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -77,7 +76,6 @@ public class ObserverDialog extends BasicDialog
 
     public void printMessage(String msg)
     {
-        StatusBar.getStatusBar().setMessage(msg);
         outputArea.append("\n\n" + dateFormat.format(new Date())
                 + " Message:\n" + msg);
         outputScrollPane.scrollRectToVisible(new Rectangle(0, outputScrollPane.getHeight(), 1, 1));

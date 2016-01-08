@@ -54,14 +54,13 @@ public class BButton extends JButton
         setBorder(new EmptyBorder(5, 5, 5, 25));
     }
 
-    /**
-     *
-     * @param text
-     */
-    public BButton(ImageIcon icon)
+    public BButton(ImageIcon icon, boolean emptyBorder)
     {
         setIcon(icon);
-        setBorder(null);
-        setBorder(new EmptyBorder(5, 5, 5, 5));
+        if (emptyBorder)
+        {
+            setBorder(null);
+            setBorder(new EmptyBorder(5, 5, 5, 5));
+        }
     }
 }
