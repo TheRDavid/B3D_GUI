@@ -9,8 +9,11 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentListener;
+import org.jdesktop.swingx.VerticalLayout;
+import se.datadosen.component.RiverLayout;
 
 /**
  * A Panel with 3 Textfields that stores the values of a Vector3f
@@ -26,13 +29,14 @@ public class Float3Panel extends JPanel
     private Dimension prefDimension = new Dimension(65, 20);
     private boolean manualUserChangeMade = false;
     private DecimalFormat rounder = new DecimalFormat("0.000");
+    public static final int HORIZONTAL = 0, VERTICAL = 1;
 
     /**
      * Sets the start-Vector & sets up the GUI
      *
      * @param vec
      */
-    public Float3Panel(Vector3f vec, Camera cam)
+    public Float3Panel(Vector3f vec, Camera cam, int orientation)
     {
         this.addFieldMouseListener(new InsertCamLocationMouseListener(this, cam));
         if (vec != null)
@@ -44,10 +48,22 @@ public class Float3Panel extends JPanel
         xField.setPreferredSize(prefDimension);
         yField.setPreferredSize(prefDimension);
         zField.setPreferredSize(prefDimension);
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        add(xField);
-        add(yField);
-        add(zField);
+        if (orientation == HORIZONTAL)
+        {
+            setLayout(new FlowLayout(FlowLayout.LEFT));
+            add(xField);
+            add(yField);
+            add(zField);
+        } else
+        {
+            setLayout(new RiverLayout(10, 10));
+            add(new JLabel("x: "));
+            add("tab hfill", xField);
+            add("br",new JLabel("y: "));
+            add("tab hfill", yField);
+            add("br",new JLabel("z: "));
+            add("tab hfill", zField);
+        }
     }
 
     /**
@@ -57,7 +73,7 @@ public class Float3Panel extends JPanel
     public Vector3f getVector()
     {
         //NULL-Vector
-        if(xField.getText().equals("null"))
+        if (xField.getText().equals("null"))
             return null;
         try
         {
