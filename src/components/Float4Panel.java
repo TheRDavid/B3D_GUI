@@ -8,8 +8,10 @@ import java.awt.FlowLayout;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentListener;
+import se.datadosen.component.RiverLayout;
 
 /**
  * A Panel with 4 Textfields that stores the values of a Vector4f
@@ -24,13 +26,14 @@ public class Float4Panel extends JPanel
             zField = new BTextField("Float", "z"),
             wField = new BTextField("Float", "w");
     private Dimension prefDimension = new Dimension(60, 20);
+    public static final int HORIZONTAL = 0, VERTICAL = 1;
 
     /**
      * Sets the start-Vector & sets up the GUI
      *
      * @param vec
      */
-    public Float4Panel(Vector4f vec)
+    public Float4Panel(Vector4f vec, int orientation)
     {
         if (vec != null)
         {
@@ -43,11 +46,25 @@ public class Float4Panel extends JPanel
         yField.setPreferredSize(prefDimension);
         zField.setPreferredSize(prefDimension);
         wField.setPreferredSize(prefDimension);
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        add(xField);
-        add(yField);
-        add(zField);
-        add(wField);
+        if (orientation == HORIZONTAL)
+        {
+            setLayout(new FlowLayout(FlowLayout.LEFT));
+            add(xField);
+            add(yField);
+            add(zField);
+            add(wField);
+        } else
+        {
+            setLayout(new RiverLayout(10, 10));
+            add(new JLabel("x: "));
+            add("tab hfill", xField);
+            add("br", new JLabel("y: "));
+            add("tab hfill", yField);
+            add("br", new JLabel("z: "));
+            add("tab hfill", zField);
+            add("br", new JLabel("w: "));
+            add("tab hfill", wField);
+        }
     }
 
     /**
