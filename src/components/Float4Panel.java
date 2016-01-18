@@ -33,15 +33,24 @@ public class Float4Panel extends JPanel
      *
      * @param vec
      */
-    public Float4Panel(Vector4f vec, int orientation)
+    public Float4Panel(Object vec, int orientation)
     {
         if (vec != null)
-        {
-            xField.setText("" + vec.getX());
-            yField.setText("" + vec.getY());
-            zField.setText("" + vec.getZ());
-            wField.setText("" + vec.getW());
-        }
+            if (vec instanceof Vector4f)
+            {
+                Vector4f vec4 = (Vector4f) vec;
+                xField.setText("" + vec4.getX());
+                yField.setText("" + vec4.getY());
+                zField.setText("" + vec4.getZ());
+                wField.setText("" + vec4.getW());
+            } else
+            {
+                Quaternion vec4 = (Quaternion) vec;
+                xField.setText("" + vec4.getX());
+                yField.setText("" + vec4.getY());
+                zField.setText("" + vec4.getZ());
+                wField.setText("" + vec4.getW());
+            }
         xField.setPreferredSize(prefDimension);
         yField.setPreferredSize(prefDimension);
         zField.setPreferredSize(prefDimension);
@@ -149,6 +158,21 @@ public class Float4Panel extends JPanel
         {
             ObserverDialog.getObserverDialog().printMessage("Error returning Vector4 from Float4Panel, returning Vector4f.ZERO");
             return Vector4f.ZERO;
+        }
+    }
+    /**
+     *
+     * @return quaternion
+     */
+    public Quaternion getQuaternion()
+    {
+        try
+        {
+            return new Quaternion(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText()), Float.parseFloat(zField.getText()), Float.parseFloat(wField.getText()));
+        } catch (java.lang.NumberFormatException nfe)
+        {
+            ObserverDialog.getObserverDialog().printMessage("Error returning Vector4 from Float4Panel, returning Vector4f.ZERO");
+            return Quaternion.ZERO;
         }
     }
 }
