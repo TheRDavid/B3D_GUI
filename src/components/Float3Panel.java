@@ -59,9 +59,9 @@ public class Float3Panel extends JPanel
             setLayout(new RiverLayout(10, 10));
             add(new JLabel("x: "));
             add("tab hfill", xField);
-            add("br",new JLabel("y: "));
+            add("br", new JLabel("y: "));
             add("tab hfill", yField);
-            add("br",new JLabel("z: "));
+            add("br", new JLabel("z: "));
             add("tab hfill", zField);
         }
     }
@@ -194,5 +194,23 @@ public class Float3Panel extends JPanel
     public DecimalFormat getRounder()
     {
         return rounder;
+    }
+
+    public float[] getFloats()
+    {
+        float x = Float.parseFloat(xField.getText());
+        float y = Float.parseFloat(yField.getText());
+        float z = Float.parseFloat(zField.getText());
+        return new float[]
+        {
+            x, y, z
+        };
+    }
+
+    public void setFloats(float[] toAngles)
+    {
+        xField.setText("" + toAngles[0]);
+        yField.setText("" + toAngles[1]);
+        zField.setText("" + toAngles[2]);
     }
 }
