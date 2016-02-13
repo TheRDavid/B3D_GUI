@@ -12,6 +12,7 @@ public class ColorButton extends BButton
 
     private Color color;
 
+    public void andThenDoThis(){/*hi*/}
     /**
      * Creates a ColorButton, used to set the Color of an Object
      *
@@ -31,6 +32,7 @@ public class ColorButton extends BButton
             public void actionPerformed(ActionEvent e)
             {
                 setColor(JColorChooser.showDialog(ColorButton.this, "Select Color", ColorButton.this.getBackground()));
+                andThenDoThis();
             }
         });
     }
