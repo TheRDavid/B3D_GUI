@@ -12,7 +12,6 @@ import java.text.DecimalFormat;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentListener;
-import org.jdesktop.swingx.VerticalLayout;
 import se.datadosen.component.RiverLayout;
 
 /**
@@ -23,9 +22,45 @@ import se.datadosen.component.RiverLayout;
 public class Float3Panel extends JPanel
 {
 
-    private BTextField xField = new BTextField("Float", "x"),
-            yField = new BTextField("Float", "y"),
-            zField = new BTextField("Float", "z");
+    private BTextField xField = new BTextField("Float", "x")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector3f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText()), Float.parseFloat(zField.getText())));
+            }
+        }
+    },
+            yField = new BTextField("Float", "y")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector3f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText()), Float.parseFloat(zField.getText())));
+            }
+        }
+    },
+            zField = new BTextField("Float", "z")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector3f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText()), Float.parseFloat(zField.getText())));
+            }
+        }
+    };
     private Dimension prefDimension = new Dimension(65, 20);
     private boolean manualUserChangeMade = false;
     private DecimalFormat rounder = new DecimalFormat("0.000");

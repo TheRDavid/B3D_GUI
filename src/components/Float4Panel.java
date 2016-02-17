@@ -21,10 +21,58 @@ import se.datadosen.component.RiverLayout;
 public class Float4Panel extends JPanel
 {
 
-    private BTextField xField = new BTextField("Float", "x"),
-            yField = new BTextField("Float", "y"),
-            zField = new BTextField("Float", "z"),
-            wField = new BTextField("Float", "w");
+    private BTextField xField = new BTextField("Float", "x")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector4f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText()), Float.parseFloat(zField.getText()), Float.parseFloat(wField.getText())));
+            }
+        }
+    },
+            yField = new BTextField("Float", "y")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector4f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText()), Float.parseFloat(zField.getText()), Float.parseFloat(wField.getText())));
+            }
+        }
+    },
+            zField = new BTextField("Float", "z")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector4f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText()), Float.parseFloat(zField.getText()), Float.parseFloat(wField.getText())));
+            }
+        }
+    },
+            wField = new BTextField("Float", "w")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector4f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText()), Float.parseFloat(zField.getText()), Float.parseFloat(wField.getText())));
+            }
+        }
+    };
     private Dimension prefDimension = new Dimension(60, 20);
     public static final int HORIZONTAL = 0, VERTICAL = 1;
 
@@ -73,6 +121,27 @@ public class Float4Panel extends JPanel
             add("tab hfill", zField);
             add("br", new JLabel("w: "));
             add("tab hfill", wField);
+        }
+    }
+
+    /**
+     *
+     * @param vec
+     */
+    public void setVector(Vector4f vec)
+    {
+        if (vec == null)
+        {
+            xField.setText("null");
+            yField.setText("null");
+            zField.setText("null");
+            wField.setText("null");
+        } else
+        {
+            xField.setText("" + vec.getX());
+            yField.setText("" + vec.getY());
+            zField.setText("" + vec.getZ());
+            wField.setText("" + vec.getW());
         }
     }
 
@@ -160,6 +229,7 @@ public class Float4Panel extends JPanel
             return Vector4f.ZERO;
         }
     }
+
     /**
      *
      * @return quaternion

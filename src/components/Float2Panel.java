@@ -18,8 +18,32 @@ import javax.swing.event.DocumentListener;
 public class Float2Panel extends JPanel
 {
 
-    private BTextField xField = new BTextField("Float", "x"),
-            yField = new BTextField("Float", "y");
+    private BTextField xField = new BTextField("Float", "x")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector2f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText())));
+            }
+        }
+    },
+            yField = new BTextField("Float", "y")
+    {
+        @Override
+        public void setText(String text)
+        {
+            super.setText(text);
+            if (wasJustDragged())
+            {
+                resetJustDragged();
+                setVector(new Vector2f(Float.parseFloat(xField.getText()), Float.parseFloat(yField.getText())));
+            }
+        }
+    };
     private Dimension prefDimension = new Dimension(100, 20);
 
     /**

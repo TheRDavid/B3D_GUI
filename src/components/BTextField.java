@@ -12,6 +12,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -20,6 +22,7 @@ import javax.swing.border.AbstractBorder;
 
 /**
  * Textfield with round border, that displays the given type as tooltip
+ *
  * @author David
  */
 public class BTextField extends JTextField
@@ -27,6 +30,19 @@ public class BTextField extends JTextField
 
     private String valueType;
     private String val;
+    private int iPrevMX = 0;
+    private float fPrevMX = 0;
+    private boolean justDragged = false;
+
+    public boolean wasJustDragged()
+    {
+        return justDragged;
+    }
+
+    public void resetJustDragged()
+    {
+        justDragged = false;
+    }
 
     /**
      *
@@ -50,6 +66,39 @@ public class BTextField extends JTextField
         setFont(new Font("TimesNewRoman", Font.ITALIC, 12));
         //display type
         setToolTipText(valueType);
+        switch (valueType)
+        {
+            case "Integer":
+                addMouseMotionListener(new MouseMotionAdapter()
+                {
+                    @Override
+                    public void mouseDragged(MouseEvent e)
+                    {
+                        int diff = e.getX() - iPrevMX;
+                        iPrevMX = e.getX();
+                        System.out.println("DIFF: " + diff);
+                        int value = Integer.parseInt(getText());
+                        justDragged = true;
+                        setText("" + (value + diff));
+                    }
+                });
+                break;
+            case "Float":
+                addMouseMotionListener(new MouseMotionAdapter()
+                {
+                    @Override
+                    public void mouseDragged(MouseEvent e)
+                    {
+                        float diff = e.getX() - fPrevMX;
+                        fPrevMX = (float) e.getPoint().getX();
+                        System.out.println("DIFF: " + diff);
+                        float value = Float.parseFloat(getText());
+                        justDragged = true;
+                        setText("" + (value + diff));
+                    }
+                });
+                break;
+        }
         addKeyListener(new KeyListener()
         {
             @Override
