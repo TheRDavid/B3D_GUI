@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -25,7 +26,7 @@ import javax.swing.border.AbstractBorder;
  *
  * @author David
  */
-public class BTextField extends JTextField
+public class BTextField extends JTextField implements MouseMotionListener
 {
 
     private String valueType;
@@ -46,7 +47,7 @@ public class BTextField extends JTextField
 
     /**
      *
-     * @param type (like int, float, whatever)
+     * @param type (like Integer, Float, whaevr)
      */
     public BTextField(String type)
     {
@@ -60,45 +61,13 @@ public class BTextField extends JTextField
      */
     public BTextField(String type, String value)
     {
+        addMouseMotionListener(this);
         val = value;
         valueType = type;
         setText(value);
         setFont(new Font("TimesNewRoman", Font.ITALIC, 12));
         //display type
         setToolTipText(valueType);
-        switch (valueType)
-        {
-            case "Integer":
-                addMouseMotionListener(new MouseMotionAdapter()
-                {
-                    @Override
-                    public void mouseDragged(MouseEvent e)
-                    {
-                        int diff = e.getX() - iPrevMX;
-                        iPrevMX = e.getX();
-                        System.out.println("DIFF: " + diff);
-                        int value = Integer.parseInt(getText());
-                        justDragged = true;
-                        setText("" + (value + diff));
-                    }
-                });
-                break;
-            case "Float":
-                addMouseMotionListener(new MouseMotionAdapter()
-                {
-                    @Override
-                    public void mouseDragged(MouseEvent e)
-                    {
-                        float diff = e.getX() - fPrevMX;
-                        fPrevMX = (float) e.getPoint().getX();
-                        System.out.println("DIFF: " + diff);
-                        float value = Float.parseFloat(getText());
-                        justDragged = true;
-                        setText("" + (value + diff));
-                    }
-                });
-                break;
-        }
         addKeyListener(new KeyListener()
         {
             @Override
@@ -183,5 +152,34 @@ public class BTextField extends JTextField
     public String getValueType()
     {
         return valueType;
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e)
+    {
+        switch (valueType)
+        {
+            case "Integer":
+                int diff = (e.getX() - iPrevMX) / 10;
+                iPrevMX = e.getX();
+                System.out.println("DIFF: " + diff);
+                int value = Integer.parseInt(getText());
+                justDragged = true;
+                setText("" + (value + diff));
+                break;
+            case "Float":
+                float difff = (e.getX() - fPrevMX) / 10;
+                fPrevMX = (float) e.getPoint().getX();
+                System.out.println("DIFF: " + difff);
+                float valuef = Float.parseFloat(getText());
+                justDragged = true;
+                setText("" + (valuef + difff));
+                break;
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e)
+    {
     }
 }
