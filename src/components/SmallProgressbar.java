@@ -84,7 +84,7 @@ public class SmallProgressbar extends JPanel
 
     public void setValue(int val)
     {
-        System.out.println(val + "out of "+getMax());
+        //System.out.println(val + " out of "+getMax());
         this.value = val;
         repaint();
     }
